@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>葬送的芙丽莲 · 数字图鉴</title>
+    <style>
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --forest-deep: #0a0f0a;
+    --forest-dark: #111a11;
+    --forest-mid: #1a2a1a;
+    --forest-light: #243324;
+    --bronze: #b8942e;
+    --gold: #d4af37;
+    --gold-light: #e8d48b;
+    --gold-pale: #f0e6c0;
+    --parchment: #f5e6c8;
+    --parchment-dark: #d4c4a0;
+    --text-main: #e8e0d0;
+    --text-dim: #a89878;
+    --text-faint: #786848;
+    --glass-bg: rgba(26, 42, 26, 0.45);
+    --glass-border: rgba(212, 175, 55, 0.15);
+    --glass-highlight: rgba(245, 230, 200, 0.06);
+    --frost: blur(16px) saturate(1.4);
+    --font-body: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+    --font-display: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bronze) var(--forest-deep);
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--forest-deep);
+    color: var(--text-main);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(34, 60, 34, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(40, 50, 30, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(30, 45, 25, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--forest-deep); }
+::-webkit-scrollbar-thumb { background: var(--bronze); border-radius: 3px; }
+
+/* ==================== COVER ==================== */
+
+.cover {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--forest-deep);
+}
+
+.cover-bg-image {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/cover-bg.jpg');
+    background-size: cover;
+    background-position: 50% 10%;
+    opacity: 0.22;
+    filter: blur(0.6px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.cover-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 15, 10, 0.7) 100%);
+    pointer-events: none;
+}
+
+.cover-particles {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(1px 1px at 10% 20%, rgba(212, 175, 55, 0.4), transparent),
+        radial-gradient(1px 1px at 30% 60%, rgba(212, 175, 55, 0.3), transparent),
+        radial-gradient(1px 1px at 50% 15%, rgba(212, 175, 55, 0.35), transparent),
+        radial-gradient(1px 1px at 70% 80%, rgba(212, 175, 55, 0.25), transparent),
+        radial-gradient(1px 1px at 85% 35%, rgba(212, 175, 55, 0.3), transparent),
+        radial-gradient(1px 1px at 15% 85%, rgba(212, 175, 55, 0.2), transparent),
+        radial-gradient(1.5px 1.5px at 60% 45%, rgba(232, 212, 139, 0.4), transparent),
+        radial-gradient(1px 1px at 40% 90%, rgba(212, 175, 55, 0.3), transparent),
+        radial-gradient(1.5px 1.5px at 25% 40%, rgba(232, 212, 139, 0.25), transparent),
+        radial-gradient(1px 1px at 90% 60%, rgba(212, 175, 55, 0.35), transparent);
+    animation: drift 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes drift {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-5px, 8px); }
+    50% { transform: translate(3px, -5px); }
+    75% { transform: translate(-3px, 3px); }
+}
+
+.cover-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cover-emblem { margin-bottom: 2.5rem; }
+
+.emblem-svg {
+    width: 100px;
+    height: 100px;
+    animation: emblemSpin 30s linear infinite;
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.2));
+}
+
+@keyframes emblemSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.cover-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 40px rgba(212, 175, 55, 0.15), 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.4rem;
+}
+
+.cover-subtitle-jp {
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    color: var(--text-dim);
+    letter-spacing: 0.3em;
+    margin-bottom: 2rem;
+}
+
+.cover-divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 2rem;
+}
+
+.cover-tagline {
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+    color: var(--parchment-dark);
+    line-height: 2;
+    max-width: 500px;
+    margin: 0 auto 0.6rem;
+    font-style: italic;
+}
+
+.cover-credit {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    letter-spacing: 0.2em;
+}
+
+.scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    z-index: 2;
+    animation: bounce 2s ease-in-out infinite;
+    transition: color 0.3s;
+}
+
+.scroll-hint:hover { color: var(--gold); }
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.scroll-hint-text {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+}
+
+/* ==================== PAGES ==================== */
+
+.page {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.page-header-ornament {
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    opacity: 0.6;
+    letter-spacing: 1em;
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+}
+
+.page-desc {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+}
+
+/* ==================== OVERVIEW ==================== */
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.overview-card {
+    padding: 1.8rem;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 var(--glass-highlight);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.overview-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245, 230, 200, 0.03), transparent 50%);
+    pointer-events: none;
+}
+
+.overview-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.25);
+}
+
+.overview-card-creator {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 1.4rem 1.8rem;
+}
+
+.creator-portrait {
+    flex-shrink: 0;
+}
+
+.portrait-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--forest-mid), var(--forest-light));
+    border: 2px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: var(--text-faint);
+    position: relative;
+}
+
+.portrait-placeholder img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.portrait-emoji {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--forest-mid), var(--forest-light));
+    border: 2px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.portrait-hint {
+    font-size: 0.55rem;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+}
+
+.creator-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.overview-label {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.overview-value {
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    line-height: 1.5;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-display);
+}
+
+.overview-note {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    line-height: 1.6;
+}
+
+/* ---- MUSIC PLAYER ---- */
+
+.music-player-section {
+    margin: 3rem 0;
+}
+
+.music-player {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    border-radius: 18px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 var(--glass-highlight);
+}
+
+.player-visual {
+    flex-shrink: 0;
+}
+
+.player-disc {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, var(--forest-mid) 20%, var(--forest-dark) 60%, var(--forest-deep) 100%);
+    border: 2px solid rgba(212, 175, 55, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.player-disc.spinning {
+    animation: discSpin 4s linear infinite;
+}
+
+@keyframes discSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.disc-ring {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.disc-center {
+    font-size: 1.4rem;
+    color: var(--gold);
+    z-index: 1;
+}
+
+.player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-track-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    margin-bottom: 0.2rem;
+    font-weight: 400;
+}
+
+.player-artist {
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin-bottom: 1rem;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.player-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 50%;
+    transition: color 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-btn:hover {
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.player-play {
+    width: 44px;
+    height: 44px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    color: var(--gold);
+}
+
+.player-play:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.15);
+}
+
+.player-progress {
+    margin-bottom: 0.8rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 3px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 2px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--bronze), var(--gold));
+    border-radius: 2px;
+    transition: width 0.2s linear;
+}
+
+.progress-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-faint);
+    margin-top: 0.3rem;
+}
+
+.player-tracklist {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.track-btn {
+    background: none;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    color: var(--text-faint);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.03em;
+}
+
+.track-btn:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    color: var(--text-dim);
+}
+
+.track-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.player-hint {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    margin-top: 1rem;
+    opacity: 0.6;
+}
+
+.player-hint code {
+    background: rgba(212, 175, 55, 0.08);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--gold);
+}
+
+/* ---- QUOTE SECTION ---- */
+
+.overview-quote-section {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.overview-quote-card {
+    position: relative;
+    padding: 2.5rem 3rem;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.quote-mark {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    color: var(--gold);
+}
+
+.overview-quote {
+    font-size: 1.05rem;
+    color: var(--parchment-dark);
+    line-height: 2.2;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---- AUDIENCE VOICE ---- */
+
+.audience-section {
+    margin: 3rem 0 1rem;
+}
+
+.audience-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.audience-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+}
+
+.audience-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-faint);
+}
+
+.audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+}
+
+.audience-card {
+    padding: 1.5rem;
+    border-radius: 14px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.audience-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.audience-stars {
+    color: var(--gold);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.15em;
+}
+
+.audience-text {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.audience-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.audience-source {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+}
+
+.audience-tag {
+    font-size: 0.65rem;
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 0.15rem 0.5rem;
+    border-radius: 12px;
+    letter-spacing: 0.05em;
+}
+
+.audience-edit-hint {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    margin-top: 1.5rem;
+    opacity: 0.5;
+}
+
+/* ---- BGM TOGGLE ---- */
+
+.bgm-toggle {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.2rem;
+    z-index: 200;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(10, 15, 10, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    color: var(--text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.bgm-toggle:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    color: var(--gold);
+}
+
+.bgm-toggle.playing {
+    color: var(--gold);
+    border-color: rgba(212, 175, 55, 0.3);
+    animation: bgmPulse 2s ease-in-out infinite;
+}
+
+@keyframes bgmPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.15); }
+    50% { box-shadow: 0 0 12px 4px rgba(212, 175, 55, 0.1); }
+}
+
+/* ==================== GENERATION LABEL ==================== */
+
+.generation-label {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 3rem 0 2.5rem;
+    padding: 0 1rem;
+}
+
+.gen-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+}
+
+.gen-text {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+}
+
+/* ==================== 3D FLIP CARDS ==================== */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.flip-card {
+    perspective: 1000px;
+    cursor: pointer;
+    min-height: 460px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 460px;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--glass-highlight);
+}
+
+.flip-card-front::before,
+.flip-card-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245, 230, 200, 0.04), transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-img-wrap {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.6s ease;
+    filter: saturate(0.85) contrast(1.05);
+}
+
+.card-img-offset {
+    object-position: 50% 18%;
+}
+
+.card-img-offset-eisen {
+    object-position: 50% 35%;
+}
+
+.flip-card:hover .card-img {
+    transform: scale(1.06);
+    filter: saturate(1) contrast(1.05);
+}
+
+.card-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, rgba(10, 15, 10, 0.4) 60%, rgba(10, 15, 10, 0.85) 100%);
+    pointer-events: none;
+}
+
+.card-front-info {
+    position: relative;
+    z-index: 2;
+    padding: 1.2rem 1.5rem 1.5rem;
+    margin-top: -2rem;
+}
+
+.card-name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-bottom: 0.25rem;
+}
+
+.card-name-jp {
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    margin-left: 0.5rem;
+    font-family: var(--font-body);
+}
+
+.card-role {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+}
+
+.card-quote-front {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    line-height: 1.8;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    font-style: italic;
+    opacity: 0.9;
+}
+
+.card-flip-hint {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+}
+
+.back-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 400;
+}
+
+.back-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    background: rgba(212, 175, 55, 0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.stat-label {
+    font-size: 0.68rem;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+}
+
+.stat-val {
+    font-size: 0.82rem;
+    color: var(--text-main);
+}
+
+.back-quote {
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--parchment-dark);
+    line-height: 1.7;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.8rem;
+    border-left: 2px solid rgba(212, 175, 55, 0.3);
+    background: rgba(212, 175, 55, 0.03);
+    border-radius: 0 8px 8px 0;
+}
+
+.back-desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-align: justify;
+    flex: 1;
+}
+
+.back-flip-hint {
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+    text-align: center;
+    margin-top: 0.8rem;
+}
+
+/* ==================== BOND WHEEL (SVG) ==================== */
+
+.bond-wheel {
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+.bond-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: default;
+}
+
+.bond-svg .bond-line {
+    transition: stroke-opacity 0.4s, stroke-width 0.3s;
+    stroke-opacity: 0.5;
+}
+
+.bond-svg .bond-line.highlight {
+    stroke-opacity: 1;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.4));
+}
+
+.bond-svg .bond-node {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.bond-svg .bond-node:hover circle {
+    stroke: #c9a84c;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.35));
+}
+
+.bond-svg .bond-node.active circle {
+    stroke: #e8d48b;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
+}
+
+.bond-svg .bond-center-node {
+    cursor: default;
+}
+
+.bond-svg .center-glow {
+    animation: svgCenterGlow 3s ease-in-out infinite;
+}
+
+@keyframes svgCenterGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.bond-detail-panel {
+    display: none;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    padding: 2rem;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 var(--glass-highlight);
+    position: relative;
+    animation: panelFadeIn 0.4s ease;
+}
+
+.bond-detail-panel.show {
+    display: block;
+}
+
+@keyframes panelFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bond-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.3s, background 0.3s;
+}
+
+.bond-close:hover {
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.bond-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.bond-detail-from,
+.bond-detail-to {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--gold-light);
+}
+
+.bond-detail-relation {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+}
+
+.bond-detail-text {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.9;
+    text-align: justify;
+}
+
+.bond-hint {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-faint);
+    opacity: 0.7;
+    margin-top: 1rem;
+}
+
+/* ==================== TIMELINE ==================== */
+
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline-track {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--bronze), var(--gold), var(--bronze), transparent);
+    transform: translateX(-50%);
+    opacity: 0.4;
+}
+
+.tl-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    width: 50%;
+}
+
+.tl-left {
+    padding-right: 3rem;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.tl-right {
+    margin-left: 50%;
+    padding-left: 3rem;
+}
+
+.tl-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--forest-deep);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+    z-index: 2;
+    top: 0.5rem;
+}
+
+.tl-left .tl-dot { right: -7px; }
+.tl-right .tl-dot { left: -7px; }
+
+.tl-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--frost);
+    -webkit-backdrop-filter: var(--frost);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 var(--glass-highlight);
+    max-width: 420px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.tl-card:hover {
+    border-color: rgba(212, 175, 55, 0.25);
+    transform: translateY(-3px);
+}
+
+.tl-left .tl-card { margin-left: auto; }
+
+.tl-era {
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.4rem;
+}
+
+.tl-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.6rem;
+    font-weight: 400;
+}
+
+.tl-desc {
+    font-size: 0.84rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+}
+
+/* ==================== BOTTOM TABS ==================== */
+
+.bottom-tabs {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: rgba(10, 15, 10, 0.85);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tab-btn {
+    flex: 1;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.8rem 0.8rem;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transition: width 0.3s ease;
+}
+
+.tab-btn:hover { color: var(--text-dim); }
+.tab-btn.active { color: var(--gold); }
+.tab-btn.active::before { width: 60%; }
+.tab-btn svg { transition: transform 0.3s ease; }
+.tab-btn.active svg { transform: scale(1.1); }
+
+/* ==================== SCROLL ANIMATIONS ==================== */
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ==================== MOBILE: ALWAYS SINGLE COLUMN ==================== */
+
+@media (max-width: 1200px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 4rem 1.2rem 6rem;
+    }
+
+    .overview-card-creator {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.4rem;
+    }
+
+    .music-player {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .player-visual {
+        margin: 0 auto;
+    }
+
+    .player-disc {
+        width: 80px;
+        height: 80px;
+    }
+
+    .player-info {
+        width: 100%;
+    }
+
+    .player-controls {
+        justify-content: center;
+    }
+
+    .overview-quote-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .quote-mark {
+        top: 0.8rem;
+        left: 1rem;
+    }
+
+    .audience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+    }
+
+    .flip-card {
+        min-height: 440px;
+    }
+
+    .flip-card-inner {
+        min-height: 440px;
+    }
+
+    .card-img-wrap {
+        height: 240px;
+    }
+
+    .timeline-track {
+        left: 20px;
+    }
+
+    .tl-item {
+        width: 100%;
+        padding-left: 3rem;
+        padding-right: 0;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .tl-left {
+        padding-right: 0;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .tl-right {
+        margin-left: 0;
+    }
+
+    .tl-dot {
+        left: 13px !important;
+        right: auto !important;
+    }
+
+    .tl-left .tl-card {
+        margin-left: 0;
+    }
+
+    .tab-btn {
+        padding: 0.65rem 0.5rem;
+        font-size: 0.65rem;
+    }
+
+    .bond-wheel {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cover-title {
+        letter-spacing: 0.08em;
+    }
+
+    .card-img-wrap {
+        height: 200px;
+    }
+
+    .flip-card {
+        min-height: 420px;
+    }
+
+    .flip-card-inner {
+        min-height: 420px;
+    }
+
+    .flip-card-back {
+        padding: 1.4rem;
+    }
+
+    .back-stats {
+        padding: 0.6rem;
+    }
+
+    .tl-card {
+        padding: 1rem;
+    }
+
+    .bond-detail-panel {
+        padding: 1.5rem;
+    }
+
+    .tab-btn {
+        padding: 0.6rem 0.3rem;
+        font-size: 0.6rem;
+    }
+}
+</style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<section class="cover" id="cover">
+    <div class="cover-bg-image"></div>
+    <div class="cover-particles"></div>
+    <div class="cover-vignette"></div>
+    <div class="cover-content">
+        <div class="cover-emblem">
+            <svg viewBox="0 0 120 120" class="emblem-svg">
+                <defs>
+                    <linearGradient id="emblemGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#c9a84c"/>
+                        <stop offset="50%" stop-color="#e8d48b"/>
+                        <stop offset="100%" stop-color="#b8942e"/>
+                    </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="54" fill="none" stroke="url(#emblemGold)" stroke-width="1.5" opacity="0.6"/>
+                <circle cx="60" cy="60" r="48" fill="none" stroke="url(#emblemGold)" stroke-width="0.8" opacity="0.3"/>
+                <path d="M60 20 L64 45 L60 42 L56 45 Z" fill="url(#emblemGold)" opacity="0.7"/>
+                <path d="M60 100 L56 75 L60 78 L64 75 Z" fill="url(#emblemGold)" opacity="0.7"/>
+                <path d="M20 60 L45 56 L42 60 L45 64 Z" fill="url(#emblemGold)" opacity="0.7"/>
+                <path d="M100 60 L75 64 L78 60 L75 56 Z" fill="url(#emblemGold)" opacity="0.7"/>
+                <circle cx="60" cy="60" r="12" fill="none" stroke="url(#emblemGold)" stroke-width="1.2"/>
+                <circle cx="60" cy="60" r="4" fill="url(#emblemGold)" opacity="0.8"/>
+            </svg>
+        </div>
+        <h1 class="cover-title">葬送的芙丽莲</h1>
+        <p class="cover-subtitle-jp">葬送のフリーレン</p>
+        <div class="cover-divider"></div>
+        <p class="cover-tagline">人类的寿命很短，明明知道的，为什么没有想过去多了解一点呢？</p>
+        <p class="cover-credit">— 芙丽莲 —</p>
+    </div>
+    <button class="scroll-hint" id="enterBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6,9 12,15 18,9"/>
+        </svg>
+    </button>
+</section>
+
+<section class="page" id="overview">
+    <div class="page-header">
+        <div class="page-header-ornament">✦</div>
+        <h2 class="page-title">作品概览</h2>
+        <p class="page-desc">关于这部讲述「迟来的理解」的温柔故事</p>
+    </div>
+
+    <div class="overview-grid">
+        <div class="overview-card overview-card-creator">
+            <div class="creator-portrait">
+                <div class="portrait-emoji">✍️</div>
+            </div>
+            <div class="creator-info">
+                <h3 class="overview-label">原作 · 编剧</h3>
+                <p class="overview-value">山田钟人</p>
+                <p class="overview-note">2020年起在《周刊少年Sunday》连载的故事原案与脚本</p>
+            </div>
+        </div>
+        <div class="overview-card overview-card-creator">
+            <div class="creator-portrait">
+                <div class="portrait-emoji">🎨</div>
+            </div>
+            <div class="creator-info">
+                <h3 class="overview-label">原作 · 作画</h3>
+                <p class="overview-value">阿部司</p>
+                <p class="overview-note">细腻的画风与光影表现，赋予每个场景治愈的力量</p>
+            </div>
+        </div>
+        <div class="overview-card overview-card-creator">
+            <div class="creator-portrait">
+                <div class="portrait-emoji">🎬</div>
+            </div>
+            <div class="creator-info">
+                <h3 class="overview-label">动画导演</h3>
+                <p class="overview-value">斋藤圭一郎</p>
+                <p class="overview-note">MADHOUSE制作 · 系列构成：木户行人</p>
+            </div>
+        </div>
+        <div class="overview-card overview-card-creator">
+            <div class="creator-portrait">
+                <div class="portrait-emoji">🎵</div>
+            </div>
+            <div class="creator-info">
+                <h3 class="overview-label">配乐</h3>
+                <p class="overview-value">Evan Call</p>
+                <p class="overview-note">弦乐与钢琴编织的空灵旋律，每一段配乐都直抵心灵</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="music-player-section">
+        <div class="music-player">
+            <div class="player-visual">
+                <div class="player-disc">
+                    <div class="disc-ring"></div>
+                    <div class="disc-center">♪</div>
+                </div>
+            </div>
+            <div class="player-info">
+                <h3 class="player-track-name" id="trackName">OP「勇者」— YOASOBI</h3>
+                <p class="player-artist" id="trackArtist">作曲：Ayase / 歌：ikura</p>
+                <div class="player-controls">
+                    <button class="player-btn player-prev" id="prevBtn" aria-label="上一曲">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                    </button>
+                    <button class="player-btn player-play" id="playBtn" aria-label="播放/暂停">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon-play"><polygon points="8,5 20,12 8,19"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="icon-pause" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    </button>
+                    <button class="player-btn player-next" id="nextBtn" aria-label="下一曲">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                    </button>
+                </div>
+                <div class="player-progress">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-time">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalTime">0:00</span>
+                    </div>
+                </div>
+                <div class="player-tracklist">
+                    <button class="track-btn active" data-track="0">OP「勇者」</button>
+                    <button class="track-btn" data-track="1">ED「bliss」</button>
+                    <button class="track-btn" data-track="2">OST「Beyond Journey's End」</button>
+                </div>
+            </div>
+        </div>
+        <p class="player-hint">将音频文件放入 <code>audio/</code> 目录，或修改 script.js 中的音频地址即可播放</p>
+    </div>
+
+    <div class="overview-quote-section fade-in">
+        <div class="overview-quote-card">
+            <svg class="quote-mark" width="36" height="28" viewBox="0 0 36 28" fill="currentColor" opacity="0.15"><path d="M14 0C6.268 0 0 6.268 0 14v14h14V14H7c0-3.866 3.134-7 7-7V0zm18 0c-7.732 0-14 6.268-14 14v14h14V14h-7c0-3.866 3.134-7 7-7V0z"/></svg>
+            <p class="overview-quote">"这不是一个关于冒险的故事，而是一个关于理解的故事。在正序与倒叙交错的叙事中，一位长寿精灵学会了人类最珍贵却最短暂的情感——爱。"</p>
+        </div>
+    </div>
+
+    <div class="audience-section">
+        <div class="audience-header">
+            <h3 class="audience-title">观众之声</h3>
+            <p class="audience-subtitle">来自真实观众的感受与共鸣</p>
+        </div>
+        <div class="audience-grid">
+            <div class="audience-card">
+                <div class="audience-stars">★★★★★</div>
+                <p class="audience-text">"看到芙丽莲在辛美尔墓前流泪的那一刻，我终于明白了什么叫'迟来的理解'。这部番让我重新审视自己和身边人的关系。"</p>
+                <div class="audience-meta">
+                    <span class="audience-source">— 豆瓣用户</span>
+                    <span class="audience-tag">感动</span>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="audience-stars">★★★★★</div>
+                <p class="audience-text">"画面每一帧都可以截图当壁纸，配乐更是神来之笔。这不是快餐动画，是需要静下心来慢慢品味的作品。"</p>
+                <div class="audience-meta">
+                    <span class="audience-source">— B站用户</span>
+                    <span class="audience-tag">治愈</span>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="audience-stars">★★★★☆</div>
+                <p class="audience-text">"第一次看觉得节奏慢，第二遍才发现每个镜头都有深意。芙丽莲的'不懂人心'其实就是我们每个人的缩影——总在失去后才学会珍惜。"</p>
+                <div class="audience-meta">
+                    <span class="audience-source">— 豆瓣用户</span>
+                    <span class="audience-tag">深度</span>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="audience-stars">★★★★★</div>
+                <p class="audience-text">"辛美尔那句'你要好好了解人类'是全作最温柔的诅咒。芙丽莲用一千年学会了无视，却要用一辈子去学会珍惜。"</p>
+                <div class="audience-meta">
+                    <span class="audience-source">— 小红书用户</span>
+                    <span class="audience-tag">哲思</span>
+                </div>
+            </div>
+        </div>
+        <p class="audience-edit-hint">以上为示例评价，你可以替换为真实的观众评论内容</p>
+    </div>
+</section>
+
+<section class="page" id="characters">
+    <div class="page-header">
+        <div class="page-header-ornament">✦</div>
+        <h2 class="page-title">角色图鉴</h2>
+        <p class="page-desc">两代旅人，同一条通往理解的路</p>
+    </div>
+
+    <div class="generation-label">
+        <span class="gen-line"></span>
+        <span class="gen-text">初代 · 勇者辛美尔一行</span>
+        <span class="gen-line"></span>
+    </div>
+
+    <div class="card-grid">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/frieren.jpg" alt="芙丽莲" class="card-img card-img-offset">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">芙丽莲 <span class="card-name-jp">フリーレン</span></h3>
+                        <p class="card-role">精灵 · 魔法使</p>
+                        <p class="card-quote-front">"人类的寿命很短，明明知道的，为什么没有想过去多了解一点呢？"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">芙丽莲</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">精灵</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">约1000岁</span></div>
+                        <div class="stat"><span class="stat-label">职业</span><span class="stat-val">魔法使</span></div>
+                        <div class="stat"><span class="stat-label">属性</span><span class="stat-val">全属性魔法</span></div>
+                    </div>
+                    <p class="back-desc">长寿的精灵魔法使。在漫长的生命中，十年的冒险不过转瞬即逝。直到勇者辛美尔逝世，她才在眼泪中开启了这段"了解人类"的迟到旅程。正序的探险与倒叙的回忆交织，让她真正学会了什么是爱。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/himmel.jpg" alt="辛美尔" class="card-img card-img-offset">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">辛美尔 <span class="card-name-jp">ヒンメル</span></h3>
+                        <p class="card-role">人类 · 勇者</p>
+                        <p class="card-quote-front">"如果将来有人问起我，希望你能告诉他们，我是一个好人。"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">辛美尔</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">人类</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">享年82岁</span></div>
+                        <div class="stat"><span class="stat-label">职业</span><span class="stat-val">勇者</span></div>
+                        <div class="stat"><span class="stat-label">武器</span><span class="stat-val">圣剑</span></div>
+                    </div>
+                    <p class="back-desc">击败魔王的勇者，温柔却从未说出口爱意的人。他的生命对芙丽莲而言不过是沧海一粟，但他留下的那句「你要好好了解人类」，成为她跨越世纪的羁绊之源。芙丽莲记忆里关于他的一切，都是倒叙中最温暖的光。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/heiter.jpg" alt="海塔" class="card-img">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">海塔 <span class="card-name-jp">ハイター</span></h3>
+                        <p class="card-role">人类 · 僧侣</p>
+                        <p class="card-quote-front">"能在最后的日子里，把菲伦托付给芙丽莲，是我人生中最正确的决定。"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">海塔</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">人类</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">享年约80岁</span></div>
+                        <div class="stat"><span class="stat-label">职业</span><span class="stat-val">僧侣</span></div>
+                        <div class="stat"><span class="stat-label">擅长</span><span class="stat-val">治愈魔法</span></div>
+                    </div>
+                    <p class="back-desc">队伍中永远笑着的治愈系僧侣。战后收养了孤儿菲伦，在生命最后将她托付给芙丽莲。他是连接两个时代的桥梁——用自己的暮年，点亮了新一代的起点。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/eisen.jpg" alt="艾森" class="card-img card-img-offset-eisen">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">艾森 <span class="card-name-jp">アイゼン</span></h3>
+                        <p class="card-role">矮人 · 战士</p>
+                        <p class="card-quote-front">"活着本身就是一种传承，我的战技会留在那些见过我战斗的人心中。"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">艾森</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">矮人</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">约500岁</span></div>
+                        <div class="stat"><span class="stat-label">职业</span><span class="stat-val">战士</span></div>
+                        <div class="stat"><span class="stat-label">武器</span><span class="stat-val">战斧</span></div>
+                    </div>
+                    <p class="back-desc">勇者队伍中沉默寡言的矮人战士，实力强悍却甘当后盾。他与辛美尔并肩十年，见证了一切离别。如今隐居深山，等待着被后辈找到的那一天。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="generation-label">
+        <span class="gen-line"></span>
+        <span class="gen-text">新一代 · 芙丽莲一行</span>
+        <span class="gen-line"></span>
+    </div>
+
+    <div class="card-grid">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/frieren2.jpg" alt="芙丽莲（旅途中）" class="card-img">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">芙丽莲 <span class="card-name-jp">フリーレン</span></h3>
+                        <p class="card-role">精灵 · 魔法使 · 旅途中</p>
+                        <p class="card-quote-front">"我终于明白了，那十年里大家一起看过的花，不是因为花期短暂才珍贵。"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">芙丽莲 · 旅途中</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">精灵</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">约1000岁</span></div>
+                        <div class="stat"><span class="stat-label">同行者</span><span class="stat-val">菲伦、斯塔克</span></div>
+                        <div class="stat"><span class="stat-label">目的地</span><span class="stat-val">灵魂安息之地</span></div>
+                    </div>
+                    <p class="back-desc">踏上旅途的芙丽莲，带着辛美尔留下的记忆，带着菲伦和斯塔克一起前行。在正序的旅途日常与倒叙的回忆片段中，她一点一点拼凑出「珍惜」的含义，学会了不只记录魔法，也记录人心。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/fern.jpg" alt="菲伦" class="card-img">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">菲伦 <span class="card-name-jp">フェルン</span></h3>
+                        <p class="card-role">人类 · 见习魔法使</p>
+                        <p class="card-quote-front">"芙丽莲大人总说她不懂人心，可她明明比谁都温柔。"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">菲伦</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">人类</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">约17岁</span></div>
+                        <div class="stat"><span class="stat-label">职业</span><span class="stat-val">见习魔法使</span></div>
+                        <div class="stat"><span class="stat-label">擅长</span><span class="stat-val">攻击魔法、治愈魔法</span></div>
+                    </div>
+                    <p class="back-desc">海塔在战争中收养的孤儿，后被托付给芙丽莲。年纪轻轻却异常成熟，是队伍中实际的「管家」。她继承了海塔的善良与芙丽莲的魔法，是连接过去与未来的温柔纽带。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card-img-wrap">
+                        <img src="images/stark.jpg" alt="斯塔克" class="card-img">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-front-info">
+                        <h3 class="card-name">斯塔克 <span class="card-name-jp">シュタルク</span></h3>
+                        <p class="card-role">人类 · 战士</p>
+                        <p class="card-quote-front">"真正的勇敢，不是不害怕，是害怕的时候依然站在同伴前面。"</p>
+                        <p class="card-flip-hint">点击翻转 →</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3 class="back-name">斯塔克</h3>
+                    <div class="back-stats">
+                        <div class="stat"><span class="stat-label">种族</span><span class="stat-val">人类</span></div>
+                        <div class="stat"><span class="stat-label">年龄</span><span class="stat-val">约18岁</span></div>
+                        <div class="stat"><span class="stat-label">职业</span><span class="stat-val">战士</span></div>
+                        <div class="stat"><span class="stat-label">武器</span><span class="stat-val">大剑</span></div>
+                    </div>
+                    <p class="back-desc">艾森的徒弟，从小在深山学习战技。表面大大咧咧，关键时刻却毫不犹豫地挡在最前面。他继承了艾森的沉默守护，用年轻的方式续写着战士的使命。</p>
+                    <p class="back-flip-hint">← 点击翻回</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page" id="bonds">
+    <div class="page-header">
+        <div class="page-header-ornament">✦</div>
+        <h2 class="page-title">人物关系</h2>
+        <p class="page-desc">以芙丽莲为中心，跨越两代人的羁绊之线</p>
+    </div>
+
+    <div class="bond-wheel">
+        <svg viewBox="0 0 600 520" class="bond-svg" aria-label="人物关系图">
+            <defs>
+                <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="rgba(212,175,55,0.25)"/>
+                    <stop offset="100%" stop-color="rgba(212,175,55,0)"/>
+                </radialGradient>
+                <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.4)"/>
+                </filter>
+                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.15"/>
+                </linearGradient>
+            </defs>
+
+            <line x1="300" y1="260" x2="300" y2="110" stroke="url(#lineGrad)" stroke-width="2" class="bond-line" data-bond="0"/>
+            <line x1="300" y1="260" x2="447" y2="175" stroke="url(#lineGrad)" stroke-width="2" class="bond-line" data-bond="1"/>
+            <line x1="300" y1="260" x2="447" y2="345" stroke="url(#lineGrad)" stroke-width="2" class="bond-line" data-bond="2"/>
+            <line x1="300" y1="260" x2="300" y2="420" stroke="url(#lineGrad)" stroke-width="2" class="bond-line" data-bond="3"/>
+            <line x1="300" y1="260" x2="153" y2="345" stroke="url(#lineGrad)" stroke-width="2" class="bond-line" data-bond="4"/>
+            <line x1="300" y1="260" x2="153" y2="175" stroke="url(#lineGrad)" stroke-width="2" class="bond-line" data-bond="5"/>
+
+            <circle cx="300" cy="260" r="70" fill="url(#nodeGlow)" class="center-glow"/>
+
+            <g class="bond-node bond-center-node" data-bond="center">
+                <circle cx="300" cy="260" r="52" fill="#1a2a1a" stroke="#c9a84c" stroke-width="2" filter="url(#nodeShadow)"/>
+                <text x="300" y="252" text-anchor="middle" fill="#e8d48b" font-size="13" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">芙丽莲</text>
+                <text x="300" y="274" text-anchor="middle" fill="#786848" font-size="10" font-family="'Noto Serif SC',serif">羁绊的核心</text>
+            </g>
+
+            <g class="bond-node" data-bond="0">
+                <circle cx="300" cy="70" r="38" fill="#1a2a1a" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" filter="url(#nodeShadow)"/>
+                <text x="300" y="65" text-anchor="middle" fill="#e8d48b" font-size="12" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">辛美尔</text>
+                <text x="300" y="82" text-anchor="middle" fill="#786848" font-size="9" font-family="'Noto Serif SC',serif">勇者</text>
+            </g>
+
+            <g class="bond-node" data-bond="1">
+                <circle cx="447" cy="140" r="38" fill="#1a2a1a" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" filter="url(#nodeShadow)"/>
+                <text x="447" y="135" text-anchor="middle" fill="#e8d48b" font-size="12" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">菲伦</text>
+                <text x="447" y="152" text-anchor="middle" fill="#786848" font-size="9" font-family="'Noto Serif SC',serif">弟子</text>
+            </g>
+
+            <g class="bond-node" data-bond="2">
+                <circle cx="447" cy="380" r="38" fill="#1a2a1a" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" filter="url(#nodeShadow)"/>
+                <text x="447" y="375" text-anchor="middle" fill="#e8d48b" font-size="12" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">斯塔克</text>
+                <text x="447" y="392" text-anchor="middle" fill="#786848" font-size="9" font-family="'Noto Serif SC',serif">同行者</text>
+            </g>
+
+            <g class="bond-node" data-bond="3">
+                <circle cx="300" cy="460" r="38" fill="#1a2a1a" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" filter="url(#nodeShadow)"/>
+                <text x="300" y="455" text-anchor="middle" fill="#e8d48b" font-size="12" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">海塔</text>
+                <text x="300" y="472" text-anchor="middle" fill="#786848" font-size="9" font-family="'Noto Serif SC',serif">僧侣</text>
+            </g>
+
+            <g class="bond-node" data-bond="4">
+                <circle cx="153" cy="380" r="38" fill="#1a2a1a" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" filter="url(#nodeShadow)"/>
+                <text x="153" y="375" text-anchor="middle" fill="#e8d48b" font-size="12" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">艾森</text>
+                <text x="153" y="392" text-anchor="middle" fill="#786848" font-size="9" font-family="'Noto Serif SC',serif">战士</text>
+            </g>
+
+            <g class="bond-node" data-bond="5">
+                <circle cx="153" cy="140" r="38" fill="#1a2a1a" stroke="rgba(212,175,55,0.3)" stroke-width="1.5" filter="url(#nodeShadow)"/>
+                <text x="153" y="135" text-anchor="middle" fill="#e8d48b" font-size="12" font-family="'ZCOOL XiaoWei','Noto Serif SC',serif">芙拉姆</text>
+                <text x="153" y="152" text-anchor="middle" fill="#786848" font-size="9" font-family="'Noto Serif SC',serif">师父</text>
+            </g>
+        </svg>
+    </div>
+
+    <div class="bond-detail-panel" id="bondPanel">
+        <button class="bond-close" onclick="closeBondPanel()">×</button>
+        <div class="bond-detail-header">
+            <span class="bond-detail-from" id="bondFrom"></span>
+            <svg width="40" height="20" viewBox="0 0 40 20"><path d="M4 10 H32 M28 5 L36 10 L28 15" stroke="#c9a84c" stroke-width="1.5" fill="none"/></svg>
+            <span class="bond-detail-to" id="bondTo"></span>
+        </div>
+        <div class="bond-detail-relation" id="bondRelation"></div>
+        <p class="bond-detail-text" id="bondText"></p>
+    </div>
+
+    <div class="bond-hint">点击围绕的节点，探索芙丽莲与每个人的羁绊</div>
+</section>
+
+<section class="page" id="timeline">
+    <div class="page-header">
+        <div class="page-header-ornament">✦</div>
+        <h2 class="page-title">时间刻度</h2>
+        <p class="page-desc">正序与倒叙交错，拼出完整的十年与之后</p>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-track"></div>
+
+        <div class="tl-item tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">约1000年前</div>
+                <h4 class="tl-title">芙丽莲的漫长孤独</h4>
+                <p class="tl-desc">精灵芙丽莲独自行走在大陆上，对人类世界漠不关心。她不知道什么是羁绊，也不觉得孤独。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-right">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">约100年前</div>
+                <h4 class="tl-title">芙拉姆的教诲</h4>
+                <p class="tl-desc">人类魔法使芙拉姆收芙丽莲为徒，教她魔法的同时，也种下了理解人类的第一颗种子。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">10年前</div>
+                <h4 class="tl-title">勇者一行的冒险</h4>
+                <p class="tl-desc">辛美尔、芙丽莲、海塔、艾森组队踏上讨伐魔王的旅途。十年间，他们一起看过流星雨、走过花田、在篝火旁聊天。芙丽莲记住了无数魔法，却没记住这些瞬间有多珍贵。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-right">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">5年前</div>
+                <h4 class="tl-title">魔王讨伐成功</h4>
+                <p class="tl-desc">辛美尔一行击败魔王，成为传说。芙丽莲获得了传说中的魔法——能够看见人心的「葬送之花」。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">故事开篇</div>
+                <h4 class="tl-title">辛美尔之死</h4>
+                <p class="tl-desc">辛美尔在82岁的春天平静离世。芙丽莲在葬礼上第一次流泪，她不明白为什么胸口这么痛——明明只是"短短"几十年的交情。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-right">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">现在 · 正序</div>
+                <h4 class="tl-title">新旅途的开始</h4>
+                <p class="tl-desc">芙丽莲带着海塔托付的菲伦踏上旅途，途中收留了艾森的徒弟斯塔克。三人一路向北，前往「灵魂安息之地」——据说在那里可以再见到死去之人。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">现在 · 倒叙</div>
+                <h4 class="tl-title">回忆中的碎片</h4>
+                <p class="tl-desc">旅途中，芙丽莲不断回忆起与辛美尔的过往。每一个当下的场景都会触发一段记忆——那些她曾经忽略的细节，现在都变成了温柔的刀。</p>
+            </div>
+        </div>
+
+        <div class="tl-item tl-right">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+                <div class="tl-era">未来</div>
+                <h4 class="tl-title">什么是爱？</h4>
+                <p class="tl-desc">芙丽莲的旅途还在继续。她正一点点学会：珍惜不是因为知道会失去，而是因为在拥有的时候，认真地注视过。正序与倒叙的交织，终将拼出她迟到千年的答案。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="bottom-tabs">
+    <button class="tab-btn active" data-tab="overview">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <span>作品概览</span>
+    </button>
+    <button class="tab-btn" data-tab="characters">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+        <span>角色图鉴</span>
+    </button>
+    <button class="tab-btn" data-tab="bonds">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.59 13.51l6.83 6.83"/><circle cx="18" cy="6" r="3"/><path d="M8.59 10.49l6.83-6.83"/></svg>
+        <span>人物关系</span>
+    </button>
+    <button class="tab-btn" data-tab="timeline">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        <span>时间刻度</span>
+    </button>
+</div>
+
+<script>
+(function () {
+    var BOND_DATA = [
+        { from: '芙丽莲', to: '辛美尔', relation: '被拯救者 · 永恒羁绊', text: '辛美尔是芙丽莲漫长生命中第一个真正改变她的人。十年前的旅途，她浑然不觉；十年后，她才在失去中领悟——那些被她忽略的温暖，才是最珍贵的魔法。辛美尔的死亡，成为了芙丽莲踏上新旅程的唯一理由。' },
+        { from: '芙丽莲', to: '菲伦', relation: '师徒 · 传承', text: '菲伦是辛美尔托付给芙丽莲的弟子。在这段师徒关系中，芙丽莲第一次承担起"照顾"的责任。菲伦的认真、细腻与偶尔的生气，让芙丽莲学会了关心他人——这或许是辛美尔留给她最后的礼物。' },
+        { from: '芙丽莲', to: '斯塔克', relation: '同行者 · 守护', text: '年轻的战士斯塔克加入了芙丽莲的旅途。他的勇气与稚嫩，让芙丽莲看到了当年勇者小队的影子。作为队伍中唯一的少年，他用行动证明：勇气不是无所畏惧，而是即便害怕也要前行。' },
+        { from: '芙丽莲', to: '海塔', relation: '托付者 · 信赖', text: '僧侣海塔是辛美尔最信赖的伙伴，也是将菲伦托付给芙丽莲的人。海塔用自己的暮年，完成了两个时代之间的交接。他是连接芙丽莲过去与现在的温柔桥梁。' },
+        { from: '芙丽莲', to: '艾森', relation: '同队战士 · 默契', text: '矮人战士艾森与芙丽莲同为勇者小队的一员。一个长寿精灵，一个长寿矮人，十年对他们都只是一瞬。艾森的沉默守护让芙丽莲理解了什么是不言而喻的关怀。' },
+        { from: '芙丽莲', to: '芙拉姆', relation: '师徒 · 魔法启蒙', text: '大魔法使芙拉姆是芙丽莲的师父，也是传授她魔法之美的第一人。正是芙拉姆让芙丽莲相信，魔法不只是工具，更是一种感受世界的方式。芙丽莲对魔法的热爱，源自芙拉姆的那份执着。' }
+    ];
+
+    var TRACKS = [
+        { name: 'OP「勇者」— YOASOBI', artist: '作曲：Ayase / 歌：ikura', src: 'audio/op-yuusha.mp3' },
+        { name: 'ED「bliss」— milet', artist: '作曲：Toru/UTA / 歌：milet', src: 'audio/ed-bliss.mp3' },
+        { name: 'OST「Beyond Journey\'s End」', artist: 'Evan Call', src: 'audio/ost-beyond.mp3' }
+    ];
+
+    var currentTrack = 0;
+    var bgmAudio = document.getElementById('bgm');
+    var playerAudio = null;
+    var isBgmPlaying = false;
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.page').forEach(function (p) {
+            p.style.display = 'none';
+        });
+        var target = document.getElementById(tabId);
+        if (target) {
+            target.style.display = '';
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        document.querySelectorAll('.tab-btn').forEach(function (b) {
+            b.classList.toggle('active', b.dataset.tab === tabId);
+        });
+        if (tabId !== 'bonds') {
+            closeBondPanel();
+        }
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            switchTab(this.dataset.tab);
+        });
+    });
+
+    var enterBtn = document.getElementById('enterBtn');
+    if (enterBtn) {
+        enterBtn.addEventListener('click', function () {
+            var cover = document.querySelector('.cover');
+            if (cover) {
+                var next = cover.nextElementSibling;
+                if (next) {
+                    next.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            if (bgmAudio && bgmAudio.src) {
+                bgmAudio.play().then(function () {
+                    isBgmPlaying = true;
+                    updateBgmToggle();
+                }).catch(function () {});
+            }
+        });
+    }
+
+    var bgmToggle = document.getElementById('bgmToggle');
+    if (bgmToggle) {
+        bgmToggle.addEventListener('click', function () {
+            if (!bgmAudio) return;
+            if (isBgmPlaying) {
+                bgmAudio.pause();
+                isBgmPlaying = false;
+            } else {
+                bgmAudio.play().then(function () {
+                    isBgmPlaying = true;
+                }).catch(function () {});
+            }
+            updateBgmToggle();
+        });
+    }
+
+    function updateBgmToggle() {
+        if (!bgmToggle) return;
+        var onIcon = bgmToggle.querySelector('.icon-music-on');
+        var offIcon = bgmToggle.querySelector('.icon-music-off');
+        if (isBgmPlaying) {
+            bgmToggle.classList.add('playing');
+            if (onIcon) onIcon.style.display = '';
+            if (offIcon) offIcon.style.display = 'none';
+        } else {
+            bgmToggle.classList.remove('playing');
+            if (onIcon) onIcon.style.display = 'none';
+            if (offIcon) offIcon.style.display = '';
+        }
+    }
+
+    document.querySelectorAll('.flip-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+            this.classList.toggle('flipped');
+        });
+    });
+
+    document.querySelectorAll('.bond-node:not(.bond-center-node)').forEach(function (node) {
+        node.addEventListener('click', function () {
+            var bondIdx = parseInt(this.dataset.bond, 10);
+            if (!isNaN(bondIdx)) {
+                openBondPanel(bondIdx);
+            }
+        });
+    });
+
+    function openBondPanel(idx) {
+        var data = BOND_DATA[idx];
+        if (!data) return;
+        var panel = document.getElementById('bondPanel');
+        if (!panel) return;
+        panel.querySelector('.bond-detail-from').textContent = data.from;
+        panel.querySelector('.bond-detail-to').textContent = data.to;
+        panel.querySelector('.bond-detail-relation').textContent = data.relation;
+        panel.querySelector('.bond-detail-text').textContent = data.text;
+        panel.classList.add('show');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.querySelectorAll('.bond-node').forEach(function (n) {
+            var nIdx = parseInt(n.dataset.bond, 10);
+            n.classList.toggle('active', nIdx === idx);
+        });
+        document.querySelectorAll('.bond-line').forEach(function (l) {
+            var lIdx = parseInt(l.dataset.bond, 10);
+            l.classList.toggle('highlight', lIdx === idx);
+        });
+    }
+
+    window.closeBondPanel = function () {
+        var panel = document.getElementById('bondPanel');
+        if (panel) {
+            panel.classList.remove('show');
+        }
+        document.querySelectorAll('.bond-node.active').forEach(function (n) {
+            n.classList.remove('active');
+        });
+        document.querySelectorAll('.bond-line.highlight').forEach(function (l) {
+            l.classList.remove('highlight');
+        });
+    };
+
+    var playBtn = document.getElementById('playBtn');
+    var prevBtn = document.getElementById('prevBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var progressFill = document.getElementById('progressFill');
+    var currentTimeEl = document.getElementById('currentTime');
+    var totalTimeEl = document.getElementById('totalTime');
+    var trackNameEl = document.getElementById('trackName');
+    var trackArtistEl = document.getElementById('trackArtist');
+    var discEl = document.querySelector('.player-disc');
+
+    function initPlayerAudio() {
+        if (playerAudio) return;
+        playerAudio = new Audio();
+        playerAudio.preload = 'metadata';
+        playerAudio.addEventListener('timeupdate', function () {
+            if (!playerAudio.duration) return;
+            var pct = (playerAudio.currentTime / playerAudio.duration) * 100;
+            if (progressFill) progressFill.style.width = pct + '%';
+            if (currentTimeEl) currentTimeEl.textContent = formatTime(playerAudio.currentTime);
+        });
+        playerAudio.addEventListener('loadedmetadata', function () {
+            if (totalTimeEl) totalTimeEl.textContent = formatTime(playerAudio.duration);
+        });
+        playerAudio.addEventListener('ended', function () {
+            nextTrack();
+        });
+    }
+
+    function loadTrack(idx) {
+        currentTrack = idx;
+        var track = TRACKS[currentTrack];
+        if (trackNameEl) trackNameEl.textContent = track.name;
+        if (trackArtistEl) trackArtistEl.textContent = track.artist;
+        if (playerAudio) {
+            playerAudio.src = track.src;
+            playerAudio.load();
+        }
+        if (progressFill) progressFill.style.width = '0%';
+        if (currentTimeEl) currentTimeEl.textContent = '0:00';
+        if (totalTimeEl) totalTimeEl.textContent = '0:00';
+        document.querySelectorAll('.track-btn').forEach(function (b) {
+            b.classList.toggle('active', parseInt(b.dataset.track, 10) === currentTrack);
+        });
+    }
+
+    function togglePlay() {
+        initPlayerAudio();
+        if (!playerAudio.src || playerAudio.src === window.location.href) {
+            loadTrack(currentTrack);
+        }
+        if (playerAudio.paused) {
+            playerAudio.play().then(function () {
+                if (playBtn) {
+                    playBtn.querySelector('.icon-play').style.display = 'none';
+                    playBtn.querySelector('.icon-pause').style.display = '';
+                }
+                if (discEl) discEl.classList.add('spinning');
+            }).catch(function () {});
+        } else {
+            playerAudio.pause();
+            if (playBtn) {
+                playBtn.querySelector('.icon-play').style.display = '';
+                playBtn.querySelector('.icon-pause').style.display = 'none';
+            }
+            if (discEl) discEl.classList.remove('spinning');
+        }
+    }
+
+    function nextTrack() {
+        var next = (currentTrack + 1) % TRACKS.length;
+        loadTrack(next);
+        if (playerAudio && !playerAudio.paused) {
+            playerAudio.play().catch(function () {});
+        }
+    }
+
+    function prevTrack() {
+        var prev = (currentTrack - 1 + TRACKS.length) % TRACKS.length;
+        loadTrack(prev);
+        if (playerAudio && !playerAudio.paused) {
+            playerAudio.play().catch(function () {});
+        }
+    }
+
+    function formatTime(sec) {
+        if (isNaN(sec)) return '0:00';
+        var m = Math.floor(sec / 60);
+        var s = Math.floor(sec % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    if (playBtn) playBtn.addEventListener('click', togglePlay);
+    if (nextBtn) nextBtn.addEventListener('click', nextTrack);
+    if (prevBtn) prevBtn.addEventListener('click', prevTrack);
+
+    var progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+        progressBar.addEventListener('click', function (e) {
+            if (!playerAudio || !playerAudio.duration) return;
+            var rect = progressBar.getBoundingClientRect();
+            var ratio = (e.clientX - rect.left) / rect.width;
+            playerAudio.currentTime = ratio * playerAudio.duration;
+        });
+    }
+
+    document.querySelectorAll('.track-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var idx = parseInt(this.dataset.track, 10);
+            initPlayerAudio();
+            loadTrack(idx);
+            playerAudio.play().then(function () {
+                if (playBtn) {
+                    playBtn.querySelector('.icon-play').style.display = 'none';
+                    playBtn.querySelector('.icon-pause').style.display = '';
+                }
+                if (discEl) discEl.classList.add('spinning');
+            }).catch(function () {});
+        });
+    });
+
+    var animObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(function (el) {
+        animObserver.observe(el);
+    });
+
+    document.querySelectorAll('.tl-item').forEach(function (item, i) {
+        item.classList.add(i % 2 === 0 ? 'fade-in-left' : 'fade-in-right');
+        animObserver.observe(item);
+    });
+
+    document.querySelectorAll('.overview-card').forEach(function (card, i) {
+        card.classList.add('fade-in');
+        card.style.transitionDelay = (i * 0.08) + 's';
+        animObserver.observe(card);
+    });
+
+    document.querySelectorAll('.flip-card').forEach(function (card, i) {
+        card.classList.add('fade-in');
+        card.style.transitionDelay = (i * 0.1) + 's';
+        animObserver.observe(card);
+    });
+
+    document.querySelectorAll('.bond-node:not(.bond-center-node)').forEach(function (node, i) {
+        node.style.opacity = '0';
+        node.style.transition = 'opacity 0.6s ease ' + (i * 0.1) + 's';
+        setTimeout(function () { node.style.opacity = '1'; }, 100);
+    });
+
+    var cover = document.querySelector('.cover');
+    if (cover) {
+        window.addEventListener('scroll', function () {
+            var scrollY = window.pageYOffset;
+            var coverH = cover.offsetHeight;
+            if (scrollY < coverH) {
+                var ratio = scrollY / coverH;
+                var content = cover.querySelector('.cover-content');
+                if (content) {
+                    content.style.transform = 'translateY(' + (scrollY * 0.3) + 'px)';
+                    content.style.opacity = 1 - ratio * 0.8;
+                }
+            }
+        }, { passive: true });
+    }
+
+    switchTab('cover');
+})();
+
+</script>
+<audio id="bgm" loop preload="none" src="audio/bgm.mp3"></audio>
+<button class="bgm-toggle" id="bgmToggle" aria-label="切换背景音乐">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon-music-on"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon-music-off" style="display:none"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="2"/></svg>
+</button>
+</body>
+</html>
